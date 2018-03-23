@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="test.shop.dao.DictMapper">
+
+    <select id="findDictByCode" resultType="test.shop.model.BaseDict" parameterType="string">
+         select * from base_dict a where a.dict_enable=1 and a.dict_type_code=#{code}
+    </select>
+
+    <insert id="addBaseDict" parameterType="test.shop.model.ShopData">
+
+       insert into base_dict(
+        dict_type_code,
+        dict_type_name,
+        dict_item_name,
+        dict_enable
+        )
+        values(
+        '002',
+        '商品名称',
+        #{dict_item_name},
+        '1'
+        )
+
+    </insert>
+
+    <select id="findLastInsertId" resultType="int">
+         SELECT LAST_INSERT_ID();
+    </select>
+
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="test.shop.dao.ShopperMapper">-->
+    <mapper namespace="test.shop.dao.ShopperMapper">
+    
+    <sql id="shopper_where">
+        <where>
+            <if test="shopName != null and shopName != ''">
+                and a.shop_name like '%${shopName}%'
+
+            </if>
+            <if test="shopSource != null and shopSource != ''">
+                and a.shop_source=#{shopSource}
+
+            </if>
+            <if test="shopType != null and shopType != ''">
+                and a.shop_type=#{shopType}
+
+            </if>
+
+        </where>
+
+    </sql>
+
+    <sql id="curb_shopper_where">
+        <where>
+            <if test="shopName != null and shopName != ''">
+                and a.shop_name like '%${shopName}%'
+
+            </if>
+            <if test="shopSource != null and shopSource != ''">
+                and a.shop_source=#{shopSource}
+
+            </if>
+            <if test="shopType != null and shopType != ''">
+                and a.shop_type!=#{shopType}
+
+            </if>
+
+        </where>
+
+    </sql>
+    
+    <select id="findShopperByVo" parameterType="test.shop.model.QueryVo" resultType="test.shop.model.Shopper">
+        select a.shop_id,a.shop_name,b.dict_item_name shop_type,c.dict_item_name shop_matter,
+a.shop_price,a.shop_address,a.sell_phone,a.sell_man,a.shop_createtime
+from shopper a
+left join base_dict b on a.shop_type = b.dict_id
+left join base_dict c on a.shop_matter = c.dict_id
+
+        <include refid="shopper_where"></include>
+        limit #{start},#{size}
+    </select>
+
+    <select id="curbFindShopperByVo" parameterType="test.shop.model.QueryVo" resultType="test.shop.model.Shopper">
+        select a.shop_id,a.shop_name,b.dict_item_name shop_type,c.dict_item_name shop_matter,
+        a.shop_price,a.shop_address,a.sell_phone,a.sell_man,a.shop_createtime
+        from shopper a
+        left join base_dict b on a.shop_type = b.dict_id
+        left join base_dict c on a.shop_matter = c.dict_id
+
+        <include refid="curb_shopper_where"></include>
+    </select>
+
+    <select id="findShopperByVoCount" parameterType="test.shop.model.QueryVo" resultType="int">
+        select count(*)
+        from shopper a
+        left join base_dict b on a.shop_type = b.dict_id
+        left join base_dict c on a.shop_matter = c.dict_id
+
+        <include refid="shopper_where"></include>
+    </select>
+
+    <select id="curbFindShopperByVoCount" parameterType="test.shop.model.QueryVo" resultType="int">
+        select count(*)
+        from shopper a
+        left join base_dict b on a.shop_type = b.dict_id
+        left join base_dict c on a.shop_matter = c.dict_id
+
+        <include refid="curb_shopper_where"></include>
+    </select>
+
+
+
+    <select id="findAllCount"  resultType="int">
+        select count(*) from shopper
+    </select>
+
+    <select id="curbFindAllCount"  resultType="int" parameterType="string">
+        select count(*) from shopper where shop_type != #{curbType}
+    </select>
+
+    <select id="findShopperById" parameterType="long" resultType="test.shop.model.Shopper">
+        select *, from shopper where shop_id = #{id}
+    </select>
+
+    <select id="findShopDataById" parameterType="long" resultType="test.shop.model.ShopData">
+        select a.*,b.dict_item_name from shopper a LEFT JOIN base_dict b on a.shop_matter = b.dict_id where shop_id = #{id}
+    </select>
+
+    <update id="updateShopDataById" parameterType="test.shop.model.ShopData">
+        update shopper
+        <set>
+            <if test="shop_name != null and shop_name != ''">
+                shop_name=#{shop_name},
+            </if>
+            <if test="shop_source != null and shop_source != ''">
+                shop_source=#{shop_source},
+            </if>
+            <if test="shop_type != null and shop_type != ''">
+                shop_type=#{shop_type},
+            </if>
+            <if test="shop_matter != null and shop_matter != ''">
+                shop_matter=#{shop_matter},
+            </if>
+            <if test="shop_price != null and shop_price != ''">
+                shop_price=#{shop_price},
+            </if>
+            <if test="sell_man != null and sell_man != ''">
+                sell_man=#{sell_man},
+            </if>
+            <if test="sell_phone != null and sell_phone != ''">
+                sell_phone=#{sell_phone},
+            </if>
+            <if test="shop_address != null and shop_address != ''">
+                shop_address=#{shop_address},
+            </if>
+            <if test="shop_createtime != null and shop_createtime != ''">
+                shop_createtime=#{shop_createtime},
+            </if>
+        </set>
+
+        where shop_id=#{shop_id}
+
+    </update>
+    
+    <delete id="deleteShopDataById" parameterType="long">
+      delete from shopper where shop_id = #{id}
+    </delete>
+
+    <!--<insert id="addShopper" parameterType="test.shop.model.ShopData">
+        INSERT into shopper(shop_name,shop_source,shop_type,shop_matter,shop_price,sell_man,sell_phone,shop_address,shop_createtime)
+values(#{shop_name},#{shop_source},#{shop_type},#{},#{shop_price},#{sell_man},#{sell_phone},#{shop_address},#{shop_createtime})
+    </insert>
+
+    <insert id="addBaseDict" parameterType="test.shop.model.ShopData">
+
+    </insert>-->
+    
+    <insert id="addShopper" parameterType="test.shop.model.ShopData">
+
+      INSERT into shopper(
+      shop_name,
+      shop_source,
+      shop_type,
+      shop_matter,
+      shop_price,
+      sell_man,
+      sell_phone,
+      shop_address,
+      shop_createtime
+      )
+      values(
+      #{shop_name},
+      #{shop_source},
+      #{shop_type},
+      #{shop_matter},
+      #{shop_price},
+      #{sell_man},
+      #{sell_phone},
+      #{shop_address},
+      #{shop_createtime}
+      )
+
+
+    </insert>
+    
+    
+</mapper>
