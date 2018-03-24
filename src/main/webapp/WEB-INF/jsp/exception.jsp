@@ -37,7 +37,7 @@
 <title>出错了 -</title>
 
 <body>
-	<div id="main">
+	<%--<div id="main">
 		<!----submenu------->
 		<div class="pbox">
 			<div class="error_cont">
@@ -54,6 +54,14 @@
 			</div>
 			<!----mainOver------>
 			<div class="clear1"></div>
+		</div>
+	</div>--%>
+
+	<div class="jumbotron">
+		<div class="container">
+		<h2>HTTP错误 404 - 文件或目录未找到</h2>
+		<p>...</p>
+		<p><a class="btn btn-primary btn-lg" href="<%=basePath%>login/test" role="button">重新登陆</a></p>
 		</div>
 	</div>
 </body>

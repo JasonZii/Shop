@@ -369,7 +369,7 @@
 		</div>
 	</div>
 	<!-- /#page-wrapper -->
-	<div id="sell-table" style="height:700px;width:700px;left:400px;position:absolute;">
+	<div id="sell-table" style="display: none;height:700px;width:700px;left:300px;position:absolute;">
 
 		<div class="row">
 			<div class="col-lg-12">
@@ -377,62 +377,83 @@
 			</div>
 			<!-- /.col-lg-12 -->
 		</div>
+
+
+
+
+	<%--<form class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>--%>
+
+
+		<div>
+			<span class="label label-default">Default</span>
+			<%--<span class="label label-primary">Primary</span>--%>
+			<span class="label label-success">日用</span>
+			<span class="label label-info">食物</span>
+			<span class="label label-warning">电器</span>
+			<span class="label label-danger">衣物</span>
+		</div>
+
+
+
 		<div class="progress">
-			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="10" aria-valuemin="0"
-				 aria-valuemax="100" style="width: 40%">123
-				<span class="sr-only">40% Complete (success)</span>
+			<div class="progress-bar progress-bar-success progress-bar-striped"
+				 role="progressbar" aria-valuenow="40"
+				 aria-valuemin="0" aria-valuemax="100" style="width: ${(${t.commodity}/${t.totalSpend})*100}%">
+				<span class="sr-only">40% Complete (success)</span>123
 			</div>
 		</div>
 		<div class="progress">
-			<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
-				 aria-valuemax="100" style="width: 20%">321
+			<div class="progress-bar progress-bar-info progress-bar-striped"
+				 role="progressbar" aria-valuenow="20"
+				 aria-valuemin="0" aria-valuemax="100" style="width: ${(t.electron/t.totalSpend)*100}%">
 				<span class="sr-only">20% Complete</span>
 			</div>
 		</div>
 		<div class="progress">
-			<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0"
-				 aria-valuemax="100" style="width: 60%">
+			<div class="progress-bar progress-bar-warning progress-bar-striped"
+				 role="progressbar" aria-valuenow="60"
+				 aria-valuemin="0" aria-valuemax="100" style="width: ${(t.food/t.totalSpend)*100}%">
 				<span class="sr-only">60% Complete (warning)</span>
 			</div>
 		</div>
 		<div class="progress">
-			<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0"
-				 aria-valuemax="100" style="width: 80%">
+			<div class="progress-bar progress-bar-danger progress-bar-striped"
+				 role="progressbar" aria-valuenow="80"
+				 aria-valuemin="0" aria-valuemax="100" style="width: ${(t.clothes/t.totalSpend)*100}%">
 				<span class="sr-only">80% Complete (danger)</span>
 			</div>
 		</div>
 
-		<div class="progress">
+<%--		<div class="progress">
 			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
 				<span class="sr-only">45% Complete</span>234
 			</div>
-			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-				<span class="sr-only">45% Complete</span>234
-			</div>
-			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-				<span class="sr-only">45% Complete</span>234
-			</div>
-		</div>
 
-		<div class="progress">
-			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-				<span class="sr-only">45% Complete</span>234
-			</div>
-			<div class="progress-bar progress-bar-success" style="width: 35%">
-				<span class="sr-only">35% Complete (success)</span>234
-			</div>
-			<div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
-				<span class="sr-only">20% Complete (warning)</span>234
-			</div>
-			<div class="progress-bar progress-bar-danger" style="width: 10%">
-				<span class="sr-only">10% Complete (danger)</span>
-			</div>
+		</div>--%>
+
+		<div class="col-lg-6" style="left: 400px">
+			<form class="form-inline" action="<%=basePath%>/shop/buyTable" method="get">
+				<div class="form-group">
+					<label for="beginDate">起始时间</label>
+					<input type="text" class="form-control" id="beginDate" name="beginDate">
+				</div>
+				<div class="form-group">
+					<label for="endDate">结束时间</label>
+					<input type="text" class="form-control" id="endDate" name="endDate">
+				</div>
+				<button type="submit" class="btn btn-primary">展示</button>
+			</form>
 		</div>
 
 	</div>
 
-
 </div>
+
 <!-- 编辑对话框 -->
 <div class="modal fade" id="customerEditDialog" tabindex="-1" role="dialog"
 	 aria-labelledby="myModalLabel">

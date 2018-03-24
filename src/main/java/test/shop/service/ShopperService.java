@@ -5,6 +5,7 @@ import test.shop.model.ShopData;
 import test.shop.model.Shopper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author : jasonzii @Author
@@ -13,26 +14,25 @@ import java.util.List;
  */
 public interface ShopperService {
 
-     List<Shopper> findShopperByVo(QueryVo vo);
+    List<Shopper> findShopperByVo(QueryVo vo);
 
 
-     Integer findShopperByVoCount(QueryVo vo);
+    Integer findShopperByVoCount(QueryVo vo);
 
 
+    Shopper findShopperById(Long id);
 
+    ShopData findShopDataById(Long id);
 
+    void updateShopDataById(ShopData shopData);
 
-     Shopper findShopperById(Long id);
+    void deleteShopDataById(Long id);
 
-     ShopData findShopDataById(Long id);
+    void addShop(ShopData shopData);
 
-     void updateShopDataById(ShopData shopData);
+    Integer findAllCount();
 
-     void deleteShopDataById(Long id);
-
-     void addShop(ShopData shopData);
-
-     Integer findAllCount();
+    Map findTypeSumMoney(String beginDate,String endDate);
 
 
 }

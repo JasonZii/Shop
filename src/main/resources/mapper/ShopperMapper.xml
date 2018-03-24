@@ -171,9 +171,48 @@ values(#{shop_name},#{shop_source},#{shop_type},#{},#{shop_price},#{sell_man},#{
       #{shop_address},
       #{shop_createtime}
       )
-
-
     </insert>
-    
+
+    <select id="findSumMoneyByType" resultType="int" >
+        SELECT
+        SUM(shop_price)
+        FROM
+        shopper
+        <where>
+
+            <if test="beginDate != null and beginDate != ''">
+                AND shop_createtime <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND shop_createtime <![CDATA[<=]]> #{endDate}
+            </if>
+            <if test="shopType != null and shopType != ''">
+                AND shop_type = #{shopType}
+            </if>
+
+        </where>
+        GROUP BY
+        shop_type
+
+    </select>
+
+    <select id="findALLSumMoneyByDate" resultType="int" >
+        SELECT
+        SUM(shop_price)
+        FROM
+        shopper
+        <where>
+
+            <if test="beginDate != null and beginDate != ''">
+                AND shop_createtime <![CDATA[>=]]> #{beginDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND shop_createtime <![CDATA[<=]]> #{endDate}
+            </if>
+
+        </where>
+
+    </select>
+
     
 </mapper>

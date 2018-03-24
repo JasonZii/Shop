@@ -10,6 +10,8 @@ public class QueryVo {
 	private Integer size = 10;
 
 
+
+
 	public String getShopName() {
 		return shopName;
 	}

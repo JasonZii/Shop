@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import test.shop.model.*;
 import test.shop.service.DictService;
@@ -13,6 +14,7 @@ import test.shop.service.ShopperService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author : jasonzii @Author
@@ -41,8 +43,6 @@ public class UserController {
     @RequestMapping(value = "/list")
     public String list(QueryVo vo, Model model, HttpServletRequest request) throws Exception{
 
-
-
         //商品类别
         List<BaseDict> typeList = dictService.findDictByCode(shop_dict_type);
         //购买方式
@@ -53,7 +53,6 @@ public class UserController {
         //字典表显示
         model.addAttribute("typeList",typeList);
         model.addAttribute("sellList",sellList);
-
 
 
         if(vo.getShopName() != null){
@@ -137,11 +136,55 @@ public class UserController {
         return "shop";
     }
 
+    @RequestMapping("/buyTable")
+    public String buyTable(@RequestParam String beginDate,
+                           @RequestParam String endDate,
+                           Model model)throws Exception{
+
+        Map<String,Integer> map = shopperService.findTypeSumMoney(beginDate, endDate);
+
+        /* keySet
+        for(String key:map.keySet()){
+            Integer value = map.get(key);
+        }*/
+
+        Table t = new Table();
+
+        //entrySet
+        for (Map.Entry<String,Integer> vo:map.entrySet()) {
+
+            if(vo.getKey().equals("1"))
+            {
+               t.setCommodity(vo.getValue());
+            }else if(vo.getKey().equals("2"))
+            {
+                t.setElectron(vo.getValue());
+
+            }else if(vo.getKey().equals("3"))
+            {
+                t.setFood(vo.getValue());
+
+            }else if(vo.getKey().equals("4"))
+            {
+                t.setClothes(vo.getValue());
+
+            }else if(vo.getKey().equals("allSumMoneyByDate"))
+            {
+                t.setTotalSpend(vo.getValue());
+            }
+        }
+
+        model.addAttribute("table",t);
+
+
+        return "shop";
+    }
+
 
     @RequestMapping("/test")
     public String show()throws Exception{
 //        int a = 1/0;
-        return "shop";
+        return "exception";
     }
 
 }

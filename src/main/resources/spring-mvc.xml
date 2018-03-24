@@ -39,5 +39,12 @@
     <mvc:resources location="/fonts/" mapping="/fonts/**"/>
     <mvc:resources location="/img/" mapping="/img/**"/>
 
-
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="test.shop.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+    
 </beans>

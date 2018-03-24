@@ -15,6 +15,5 @@ public interface LoginMapper {
     public void saveUser(User user);
 
     public User findUserByName(@Param("username")String username);
-//    public User findUserByName(String username);
 
 }

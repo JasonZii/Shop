@@ -14,7 +14,9 @@ import test.shop.service.ShopperService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author : jasonzii @Author
@@ -45,7 +47,7 @@ public class ShopperServiceImpl implements ShopperService {
 
         HttpSession session = request.getSession();
         Object o = session.getAttribute(curbName);
-        if(o.equals(curbName)){
+        if(o != null &&  o.equals(curbName)){
             if(vo.getShopType() == null){
                 vo.setShopType(curbType);
                 List<Shopper> list = shopperMapper.curbFindShopperByVo(vo);
@@ -67,7 +69,7 @@ public class ShopperServiceImpl implements ShopperService {
 
         HttpSession session = request.getSession();
         Object o = session.getAttribute(curbName);
-        if(o.equals(curbName)){
+        if(o != null && o.equals(curbName)){
             if(vo.getShopType() == null){
                 Integer count = shopperMapper.curbFindShopperByVoCount(vo);
                 return count;
@@ -128,13 +130,37 @@ public class ShopperServiceImpl implements ShopperService {
 
         HttpSession session = request.getSession();
         Object o = session.getAttribute(curbName);
-        if(o.equals(curbName)){
+        if(o != null && o.equals(curbName)){
             Integer allCount = shopperMapper.curbFindAllCount(curbType);
+            return allCount;
+        }else{
+
+            Integer allCount = shopperMapper.findAllCount();
             return allCount;
         }
 
-        Integer allCount = shopperMapper.findAllCount();
-        return allCount;
+    }
+
+    @Override
+    public Map findTypeSumMoney(String beginDate,String endDate) {
+
+        Map<String,Integer> m = new HashMap();
+
+        Integer allSumMoneyByDate = shopperMapper.findALLSumMoneyByDate(beginDate, endDate);
+
+        for(int i=1;i<5;i++){
+
+            Integer sumMoney = shopperMapper.findSumMoneyByType(beginDate, endDate, String.valueOf(i));
+
+            m.put(String.valueOf(i),sumMoney);
+        }
+
+
+        m.put("allSumMoneyByDate",allSumMoneyByDate);
+
+
+
+        return m;
     }
 
 

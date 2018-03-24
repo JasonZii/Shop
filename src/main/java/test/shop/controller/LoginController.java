@@ -11,8 +11,11 @@ import test.shop.Utils.MailUtils;
 import test.shop.model.User;
 import test.shop.service.LoginService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @Author : jasonzii @Author
@@ -62,26 +65,35 @@ public class LoginController {
 
     @RequestMapping("/ln")
     public String login(@RequestParam String username, @RequestParam String password,
-                         HttpServletRequest request)throws Exception{
+                        HttpServletRequest request, HttpServletResponse response)throws Exception{
 
         username = new String(username.getBytes("iso8859-1"),"utf-8");
 
         boolean code = loginService.findUserByName(username,password);
 
-        if(username.equals(curbName)){
-            HttpSession session = request.getSession();
-            session.setAttribute(curbName,username);
+        Date date = new Date();
 
+        HttpSession session = request.getSession();
+
+        if(username.equals(curbName)){
+
+            session.setAttribute(curbName,username);
+        }else {
+
+            session.invalidate();
         }
+
 
 
         if(code){
 
+            Cookie c = new Cookie("lastVisited",date.toString());
+
+            response.addCookie(c);
+
             return "redirect:/shop/list";
-
         }
-
-            return null;
+            return "index";
     }
 
 

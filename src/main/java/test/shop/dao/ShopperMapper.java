@@ -1,5 +1,6 @@
 package test.shop.dao;
 
+import org.apache.ibatis.annotations.Param;
 import test.shop.model.QueryVo;
 import test.shop.model.ShopData;
 import test.shop.model.Shopper;
@@ -36,6 +37,14 @@ public interface ShopperMapper {
 
     public Integer curbFindAllCount(String curbType);
 
+    public Integer findSumMoneyByType(@Param("beginDate") String beginDate,
+                                    @Param("endDate")String endDate,
+                                    @Param("shopType")String shopType
+    );
+
+    public Integer findALLSumMoneyByDate(@Param("beginDate") String beginDate,
+                                         @Param("endDate")String endDate
+    );
 
 
 }
