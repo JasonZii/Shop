@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="test.shop.dao.SearchMapper">
+    <select id="getShopList" resultType="test.shop.model.SearchShop">
+      SELECT
+	a.shop_id,
+	a.shop_name,
+	d.dict_item_name shop_source,
+	b.dict_item_name shop_type,
+	c.dict_item_name shop_matter,
+	a.shop_price,
+	a.shop_address,
+	a.sell_phone,
+	a.sell_man,
+	a.shop_createtime
+FROM
+	shopper a
+LEFT JOIN base_dict b ON a.shop_type = b.dict_id
+LEFT JOIN base_dict c ON a.shop_matter = c.dict_id
+LEFT JOIN base_dict d ON a.shop_source = d.dict_id
+
+    </select>
+
+
+</mapper>

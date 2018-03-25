@@ -52,7 +52,7 @@
 
 <body>
 
-<div id="wrapper">
+<div id="wrapper" >
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-default navbar-static-top" role="navigation"
@@ -212,7 +212,7 @@
 		</div>
 		<!-- /.navbar-static-side --> </nav>
 
-	<div id="page-wrapper">
+	<div id="page-wrapper" >
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">消费管理</h1>
@@ -369,14 +369,19 @@
 		</div>
 	</div>
 	<!-- /#page-wrapper -->
-	<div id="sell-table" style="display: none;height:700px;width:700px;left:300px;position:absolute;">
 
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">消费图表</h1>
-			</div>
-			<!-- /.col-lg-12 -->
+
+</div>
+
+
+<div id="sell-table" style="display:none;height:700px;width:700px;left:300px;position:absolute;">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">消费图表</h1>
 		</div>
+		<!-- /.col-lg-12 -->
+	</div>
 
 
 
@@ -389,70 +394,82 @@
 		</form>--%>
 
 
-		<div>
-			<span class="label label-default">Default</span>
-			<%--<span class="label label-primary">Primary</span>--%>
-			<span class="label label-success">日用</span>
-			<span class="label label-info">食物</span>
-			<span class="label label-warning">电器</span>
-			<span class="label label-danger">衣物</span>
+	<div>
+		<span class="label label-default">Default</span>
+		<%--<span class="label label-primary">Primary</span>--%>
+		<span class="label label-success">日用</span>
+		<span class="label label-info">食物</span>
+		<span class="label label-warning">电器</span>
+		<span class="label label-danger">衣物</span>
+	</div>
+
+
+
+	<div class="progress">
+		<div class="progress-bar progress-bar-success progress-bar-striped"
+			 role="progressbar" aria-valuenow="40"
+			 aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="pro1">
+			<span class="sr-only" id="s1">40% Complete (success)</span>
+
 		</div>
+		<p class="text-danger" id="p1" style="color: darkmagenta"></p>
+	</div>
+	<div class="progress">
+		<div class="progress-bar progress-bar-info progress-bar-striped"
+			 role="progressbar" aria-valuenow="20"
+			 aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="pro2">
+			<span class="sr-only" id="s2">40% Complete (success)</span>
+			<%--<p class="text-danger" id="p2" style="color: #080808"></p>--%>
 
+		</div>
+		<p class="text-danger" id="p2" style="color: darkmagenta"></p>
+	</div>
+	<div class="progress">
+		<div class="progress-bar progress-bar-warning progress-bar-striped"
+			 role="progressbar" aria-valuenow="60"
+			 aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="pro3">
+			<span class="sr-only" id="s3">40% Complete (success)</span>
+			<%--<p class="text-danger" id="p3" style="color: #080808"></p>--%>
+		</div>
+		<p class="text-danger" id="p3" style="color: darkmagenta"></p>
+	</div>
+	<div class="progress">
+		<div class="progress-bar progress-bar-danger progress-bar-striped"
+			 role="progressbar" aria-valuenow="80"
+			 aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="pro4">
+			<span class="sr-only" id="s4">40% Complete (success)</span>
+			<%--<p class="text-danger" id="p4" style="color: #080808"></p>--%>
+		</div>
+		<p class="text-danger" id="p4" style="color: darkmagenta"></p>
+	</div>
 
+	<%--		<div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                    <span class="sr-only">45% Complete</span>234
+                </div>
 
-		<div class="progress">
-			<div class="progress-bar progress-bar-success progress-bar-striped"
-				 role="progressbar" aria-valuenow="40"
-				 aria-valuemin="0" aria-valuemax="100" style="width: ${(${t.commodity}/${t.totalSpend})*100}%">
-				<span class="sr-only">40% Complete (success)</span>123
+            </div>--%>
+
+	<div class="col-lg-6" style="left: 400px">
+		<%--<form class="form-inline" action="${pageContext.request.contextPath }/shop/buyTable" method="get">--%>
+
+		<form class="form-inline" id="buyTable_from" >
+			<div class="form-group">
+				<label for="beginDate">起始时间</label>
+				<input type="text" class="form-control" id="beginDate" name="beginDate">
 			</div>
-		</div>
-		<div class="progress">
-			<div class="progress-bar progress-bar-info progress-bar-striped"
-				 role="progressbar" aria-valuenow="20"
-				 aria-valuemin="0" aria-valuemax="100" style="width: ${(t.electron/t.totalSpend)*100}%">
-				<span class="sr-only">20% Complete</span>
+			<div class="form-group">
+				<label for="endDate">结束时间</label>
+				<input type="text" class="form-control" id="endDate" name="endDate">
 			</div>
-		</div>
-		<div class="progress">
-			<div class="progress-bar progress-bar-warning progress-bar-striped"
-				 role="progressbar" aria-valuenow="60"
-				 aria-valuemin="0" aria-valuemax="100" style="width: ${(t.food/t.totalSpend)*100}%">
-				<span class="sr-only">60% Complete (warning)</span>
-			</div>
-		</div>
-		<div class="progress">
-			<div class="progress-bar progress-bar-danger progress-bar-striped"
-				 role="progressbar" aria-valuenow="80"
-				 aria-valuemin="0" aria-valuemax="100" style="width: ${(t.clothes/t.totalSpend)*100}%">
-				<span class="sr-only">80% Complete (danger)</span>
-			</div>
-		</div>
+			<button type="button" class="btn btn-primary" onclick="buyTable()" id="buyTable">展示</button>
 
-<%--		<div class="progress">
-			<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-				<span class="sr-only">45% Complete</span>234
-			</div>
 
-		</div>--%>
-
-		<div class="col-lg-6" style="left: 400px">
-			<form class="form-inline" action="<%=basePath%>/shop/buyTable" method="get">
-				<div class="form-group">
-					<label for="beginDate">起始时间</label>
-					<input type="text" class="form-control" id="beginDate" name="beginDate">
-				</div>
-				<div class="form-group">
-					<label for="endDate">结束时间</label>
-					<input type="text" class="form-control" id="endDate" name="endDate">
-				</div>
-				<button type="submit" class="btn btn-primary">展示</button>
-			</form>
-		</div>
-
+		</form>
 	</div>
 
 </div>
+
 
 <!-- 编辑对话框 -->
 <div class="modal fade" id="customerEditDialog" tabindex="-1" role="dialog"
@@ -599,7 +616,10 @@
 		}
     }
 
-    $(document).ready(function () {
+//    $(document).ready(function () {
+
+	$(function () {
+
 
         $("#sell_t").click(function(){
             $("#page-wrapper").fadeOut();
@@ -615,8 +635,74 @@
         });
 
 
-
     });
+
+    $("#buyTable").click(function(){
+        $.ajax({
+            type :"get",
+            async :true, //同步请求
+            url : "<%=basePath%>shop/buyTable",
+            data : {"beginDate":$("#beginDate").val(),"endDate":$("#endDate").val()},
+//            timeout:1000,
+            success:function(data){
+                //alert(data);
+//                $("#pro1").css('width',"px");//要刷新的div
+
+//                $("#sell-table").fadeIn(3000)
+
+//                $("#pro1").width((data.commodity/data.totalSpend)*100);//要刷新的div
+				if(data.totalSpend == null){
+                    $("#pro1").width(0);//要刷新的div
+                    $("#p1").text("0%" + "金额(元)：0");//要刷新的div
+
+                    $("#pro2").width(0);//要刷新的div
+                    $("#p2").text("0%" + "金额(元)：0");//要刷新的div
+
+                    $("#pro3").width(0);//要刷新的div
+                    $("#p3").text("0%" + "金额(元)：0");//要刷新的div
+
+                    $("#pro4").width(0);//要刷新的div
+                    $("#p4").text("0%" + "金额(元)：0");//要刷新的div
+
+
+				}
+                else {
+				    if(data.commodity == null){
+                        $("#pro1").width(0);//要刷新的div
+                        $("#p1").text("0%" + "金额(元)：0");//要刷新的div
+					}
+                    $("#pro1").width((data.commodity / data.totalSpend) * 700);//要刷新的div
+                    $("#p1").text(Math.ceil((data.commodity / data.totalSpend) * 100) + "%"  + "金额(元)：" + data.commodity);//要刷新的div
+
+                    if(data.commodity == null){
+                        $("#pro2").width(0);//要刷新的div
+                        $("#p2").text("0%" + "金额(元)：0");//要刷新的div
+                    }
+                    $("#pro2").width((data.electron / data.totalSpend) * 700);//要刷新的div
+                    $("#p2").text(Math.ceil((data.electron / data.totalSpend) * 100) + "%"  + "金额(元)：" + data.electron);//要刷新的div
+
+                    if(data.commodity == null){
+                        $("#pro3").width(0);//要刷新的div
+                        $("#p3").text("0%" + "金额(元)：0");//要刷新的div
+                    }
+                    $("#pro3").width((data.food / data.totalSpend) * 700);//要刷新的div
+                    $("#p3").text(Math.ceil((data.food / data.totalSpend) * 100) + "%" + "金额(元)：" + data.food);//要刷新的div
+
+                    if(data.commodity == null){
+                        $("#pro4").width(0);//要刷新的div
+                        $("#p4").text("0%" + "金额(元)：0");//要刷新的div
+                    }
+                    $("#pro4").width((data.clothes / data.totalSpend) * 700);//要刷新的div
+                    $("#p4").text(Math.ceil((data.clothes / data.totalSpend) * 100) + "%" + "金额(元)：" + data.clothes);//要刷新的div
+
+                }
+            },
+            error:function() {
+                // alert("失败，请稍后再试！");
+            }
+        });
+    });
+
 
 
     function addShop() {
@@ -641,6 +727,7 @@
             });
         }
     }
+
 </script>
 
 </body>

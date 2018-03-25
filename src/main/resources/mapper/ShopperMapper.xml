@@ -60,6 +60,7 @@ left join base_dict c on a.shop_matter = c.dict_id
         left join base_dict c on a.shop_matter = c.dict_id
 
         <include refid="curb_shopper_where"></include>
+        limit #{start},#{size}
     </select>
 
     <select id="findShopperByVoCount" parameterType="test.shop.model.QueryVo" resultType="int">

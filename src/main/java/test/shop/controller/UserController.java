@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import test.shop.model.*;
 import test.shop.service.DictService;
+import test.shop.service.SearchService;
 import test.shop.service.ShopperService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +41,11 @@ public class UserController {
     @Value("${curbName}")
     private String curbName;
 
+    @Autowired
+    private SearchService searchService;
+
     @RequestMapping(value = "/list")
-    public String list(QueryVo vo, Model model, HttpServletRequest request) throws Exception{
+    public String list(QueryVo vo, Model model) throws Exception{
 
         //商品类别
         List<BaseDict> typeList = dictService.findDictByCode(shop_dict_type);
@@ -88,6 +92,9 @@ public class UserController {
         model.addAttribute("shopName",vo.getShopName());
         model.addAttribute("shopSource",vo.getShopSource());
         model.addAttribute("shopType",vo.getShopType());
+
+        //把数据库数据存入solr文档域
+        boolean b = searchService.importAllShops();
 
 
         return "shop";
@@ -137,9 +144,10 @@ public class UserController {
     }
 
     @RequestMapping("/buyTable")
-    public String buyTable(@RequestParam String beginDate,
-                           @RequestParam String endDate,
-                           Model model)throws Exception{
+    @ResponseBody
+    public Table buyTable(@RequestParam String beginDate,
+                           @RequestParam String endDate
+                           )throws Exception{
 
         Map<String,Integer> map = shopperService.findTypeSumMoney(beginDate, endDate);
 
@@ -174,10 +182,9 @@ public class UserController {
             }
         }
 
-        model.addAttribute("table",t);
 
+        return t;
 
-        return "shop";
     }
 
 

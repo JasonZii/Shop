@@ -53,10 +53,10 @@ public class ShopperServiceImpl implements ShopperService {
                 List<Shopper> list = shopperMapper.curbFindShopperByVo(vo);
                 return list;
             }
-            if(vo.getShopType().equals(curbType)){
-
-                vo.setShopType("0");
-            }
+//            if(vo.getShopType().equals(curbType)){
+//
+//                vo.setShopType("0");
+//            }
         }
 
         List<Shopper> list = shopperMapper.findShopperByVo(vo);
@@ -70,14 +70,14 @@ public class ShopperServiceImpl implements ShopperService {
         HttpSession session = request.getSession();
         Object o = session.getAttribute(curbName);
         if(o != null && o.equals(curbName)){
-            if(vo.getShopType() == null){
+            if(vo.getShopType() == curbType){
                 Integer count = shopperMapper.curbFindShopperByVoCount(vo);
                 return count;
             }
-            if(vo.getShopType().equals(curbType)){
+          /*  if(vo.getShopType().equals(curbType)){
 
                 vo.setShopType("0");
-            }
+            }*/
         }
 
         Integer count = shopperMapper.findShopperByVoCount(vo);
@@ -131,6 +131,7 @@ public class ShopperServiceImpl implements ShopperService {
         HttpSession session = request.getSession();
         Object o = session.getAttribute(curbName);
         if(o != null && o.equals(curbName)){
+
             Integer allCount = shopperMapper.curbFindAllCount(curbType);
             return allCount;
         }else{

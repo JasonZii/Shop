@@ -153,6 +153,11 @@
       <artifactId>pageTag</artifactId>
       <version>1.0.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.solr</groupId>
+      <artifactId>solr-solrj</artifactId>
+      <version>4.10.3</version>
+    </dependency>
 
   </dependencies>
 
