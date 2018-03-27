@@ -26,8 +26,6 @@ public class Shopper implements Serializable {
     private Date shop_createtime;
 
 
-
-
     public String getShop_price() {
         return shop_price;
     }

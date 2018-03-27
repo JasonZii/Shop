@@ -1,6 +1,7 @@
 package test.shop.dao;
 
 import test.shop.model.SearchShop;
+import test.shop.model.Shopper;
 
 import java.util.List;
 

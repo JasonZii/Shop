@@ -186,10 +186,12 @@
 				<ul class="nav" id="side-menu">
 					<li class="sidebar-search">
 						<div class="input-group custom-search-form">
-							<input type="text" class="form-control" placeholder="查询内容...">
+							<input type="text" class="form-control" placeholder="查询内容..." id="keyword">
 							<span class="input-group-btn">
-								<button class="btn btn-default" type="button">
+								<button class="btn btn-default" type="button" id="button4">
+									<%--<a href="<%=basePath%>/shop/list?keywork="$("#keyword").val()">--%>
 									<i class="fa fa-search" style="padding: 3px 0 3px 0;"></i>
+									<%--</a>--%>
 								</button>
 							</span>
 						</div> <!-- /input-group -->
@@ -703,6 +705,10 @@
         });
     });
 
+    $("#button4").click(function () {
+
+        window.location.href="<%=basePath%>shop/list?keyword="+$("#keyword").val();
+    });
 
 
     function addShop() {

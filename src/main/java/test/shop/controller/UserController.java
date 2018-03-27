@@ -45,7 +45,7 @@ public class UserController {
     private SearchService searchService;
 
     @RequestMapping(value = "/list")
-    public String list(QueryVo vo, Model model) throws Exception{
+    public String list(QueryVo vo,@RequestParam(defaultValue = "") String keyword,Model model) throws Exception{
 
         //商品类别
         List<BaseDict> typeList = dictService.findDictByCode(shop_dict_type);
@@ -53,6 +53,9 @@ public class UserController {
         List<BaseDict> sellList = dictService.findDictByCode(shop_dict_sell);
         //数据总数
         Integer allCount = shopperService.findAllCount();
+
+        //把数据库数据存入solr文档域
+        boolean b = searchService.importAllShops();
 
         //字典表显示
         model.addAttribute("typeList",typeList);
@@ -74,17 +77,29 @@ public class UserController {
         List<Shopper> list = shopperService.findShopperByVo(vo);
         Integer count = shopperService.findShopperByVoCount(vo);
 
-
         Page<Shopper> page = new Page<Shopper>();
-        page.setTotal(count);
-        page.setSize(vo.getSize());
-        page.setPage(vo.getPage());
-        page.setRows(list);   //数据
 
-        if((allCount)%vo.getSize()==0){
-            page.setPageCount((allCount)/vo.getSize());
-        }else{
-            page.setPageCount((allCount)/vo.getSize()+1);
+//        if(keyword != null && keyword != "") {
+        if(!("".equals(keyword))) {
+            keyword = new String(keyword.getBytes("iso8859-1"), "utf-8");
+             page = searchService.searchPage(keyword, vo.getPage(), vo.getSize());
+
+            page.setSize(vo.getSize());
+            page.setPage(vo.getPage());
+        }
+
+        else {
+//            Page<Shopper> page = new Page<Shopper>();
+            page.setTotal(count);
+            page.setSize(vo.getSize());
+            page.setPage(vo.getPage());
+            page.setRows(list);   //数据
+
+            if ((allCount) % vo.getSize() == 0) {
+                page.setPageCount((allCount) / vo.getSize());
+            } else {
+                page.setPageCount((allCount) / vo.getSize() + 1);
+            }
         }
 
         model.addAttribute("page",page);
@@ -93,8 +108,7 @@ public class UserController {
         model.addAttribute("shopSource",vo.getShopSource());
         model.addAttribute("shopType",vo.getShopType());
 
-        //把数据库数据存入solr文档域
-        boolean b = searchService.importAllShops();
+
 
 
         return "shop";

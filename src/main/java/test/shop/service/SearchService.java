@@ -1,6 +1,7 @@
 package test.shop.service;
 
 import org.springframework.stereotype.Service;
+import test.shop.model.Page;
 
 /**
  * @Author : jasonzii @Author
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 public interface SearchService {
 
+    //加入域
     boolean importAllShops();
 
+    Page searchPage(String keyword,int page,int rows) throws Exception;
 
 }
