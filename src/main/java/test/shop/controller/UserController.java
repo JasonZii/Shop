@@ -7,13 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import test.shop.http.bootstrap.ChatServer;
 import test.shop.model.*;
 import test.shop.service.DictService;
 import test.shop.service.SearchService;
 import test.shop.service.ShopperService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +39,10 @@ public class UserController {
 
     @Value("${curbName}")
     private String curbName;
+
+    @Autowired
+    private ChatServer chatServer;
+
 
     @Autowired
     private SearchService searchService;
@@ -107,8 +110,6 @@ public class UserController {
         model.addAttribute("shopName",vo.getShopName());
         model.addAttribute("shopSource",vo.getShopSource());
         model.addAttribute("shopType",vo.getShopType());
-
-
 
 
         return "shop";

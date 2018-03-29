@@ -3,6 +3,8 @@ package test.shop.service.impl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import test.shop.dao.DictMapper;
@@ -12,6 +14,7 @@ import test.shop.model.ShopData;
 import test.shop.model.Shopper;
 import test.shop.service.ShopperService;
 
+import javax.jms.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -35,6 +38,12 @@ public class ShopperServiceImpl implements ShopperService {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @Autowired
+    private Destination topicDestination;
 
     @Value("${curbName}")
     private String curbName;
@@ -119,9 +128,21 @@ public class ShopperServiceImpl implements ShopperService {
 
         dictMapper.addBaseDict(shopData);
         Integer id = dictMapper.findLastInsertId();
-        System.out.println(id);
+//        System.out.println(id);
         shopData.setShop_matter(id.toString());
         shopperMapper.addShopper(shopData);
+
+        final Integer lastInsertId = shopperMapper.findLastInsertId();
+
+        //jms发送消息
+        jmsTemplate.send(topicDestination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                TextMessage textMessage = session.createTextMessage(lastInsertId + "");
+
+                return textMessage;
+            }
+        });
 
     }
 

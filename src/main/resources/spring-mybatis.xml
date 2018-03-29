@@ -71,22 +71,67 @@
     <!--AOP -->
     <bean id="mail" class="test.shop.Utils.SendMailTest"/>
 
-    <!--xml方式-->
-    <!--<aop:config>-->
-    <!--<aop:pointcut id="point1"-->
-    <!--expression="execution(public * test.shop.controller.LoginController.login(..))"/>-->
+    <bean id="chatServer" class="test.shop.http.bootstrap.ChatServer"/>
 
-    <!--<aop:aspect ref="mail">-->
-    <!--<aop:before method="send" pointcut-ref="point1"></aop:before>-->
-    <!--</aop:aspect>-->
-    <!--</aop:config>-->
+    <bean id="applicationWatch" class="test.shop.listener.ApplicationWatch"/>
+
+    <!--<aop:config>
+        <aop:pointcut id="point1"
+                      expression="execution(public * test.shop.controller.UserController.list(..))"/>
+        <aop:aspect ref="chatServer">
+            <aop:before method="main" pointcut-ref="point1"></aop:before>
+        </aop:aspect>
+    </aop:config>-->
+
+    <!--xml方式-->
+    <!--<aop:config>
+    <aop:pointcut id="point1"
+    expression="execution(public * test.shop.controller.LoginController.login(..))"/>
+
+    <aop:aspect ref="mail">
+    <aop:before method="send" pointcut-ref="point1"></aop:before>
+    </aop:aspect>
+    </aop:config>-->
 
     <!--注解方式-->
     <aop:aspectj-autoproxy ></aop:aspectj-autoproxy>
 
-
+    <!--solr-->
     <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg index="0" value="http://192.168.25.128:8080/solr/collection1"/>
+    </bean>
+
+    <!--mq-->
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.25.128:61616" />
+    </bean>
+
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.SingleConnectionFactory">
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <property name="targetConnectionFactory" ref="targetConnectionFactory" />
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+    </bean>
+
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg>
+            <value>spring-queue</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg value="shopAddTopic" />
+    </bean>
+
+    <bean id="shopAddMessageListener" class="test.shop.message.ShopAddMessageListener"/>
+
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="topicDestination" />
+        <property name="messageListener" ref="shopAddMessageListener" />
     </bean>
 
 

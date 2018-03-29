@@ -47,4 +47,5 @@ public interface ShopperMapper {
     );
 
 
+    public Integer findLastInsertId();
 }

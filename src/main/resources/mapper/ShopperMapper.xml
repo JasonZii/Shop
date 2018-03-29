@@ -92,7 +92,7 @@ left join base_dict c on a.shop_matter = c.dict_id
     </select>
 
     <select id="findShopperById" parameterType="long" resultType="test.shop.model.Shopper">
-        select *, from shopper where shop_id = #{id}
+        select * from shopper where shop_id = #{id}
     </select>
 
     <select id="findShopDataById" parameterType="long" resultType="test.shop.model.ShopData">
@@ -213,6 +213,10 @@ values(#{shop_name},#{shop_source},#{shop_type},#{},#{shop_price},#{sell_man},#{
 
         </where>
 
+    </select>
+
+    <select id="findLastInsertId" resultType="int">
+        SELECT LAST_INSERT_ID();
     </select>
 
     

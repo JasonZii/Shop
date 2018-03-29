@@ -158,6 +158,17 @@
       <artifactId>solr-solrj</artifactId>
       <version>4.10.3</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-all</artifactId>
+      <version>5.11.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>4.0.24.Final</version>
+    </dependency>
 
   </dependencies>
 

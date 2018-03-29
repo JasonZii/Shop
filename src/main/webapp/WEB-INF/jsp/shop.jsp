@@ -208,6 +208,12 @@
 							消费图表
 						</a>
 					</li>
+					<li>
+						<a class="active" id="talk_t" >
+							<i class="fa fa-dashboard fa-fw"></i>
+							实时聊天
+						</a>
+					</li>
 				</ul>
 			</div>
 			<!-- /.sidebar-collapse -->
@@ -385,17 +391,6 @@
 		<!-- /.col-lg-12 -->
 	</div>
 
-
-
-
-	<%--<form class="navbar-form navbar-left" role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>--%>
-
-
 	<div>
 		<span class="label label-default">Default</span>
 		<%--<span class="label label-primary">Primary</span>--%>
@@ -473,6 +468,49 @@
 </div>
 
 
+<div id="talk" style="display:none;height:700px;width:700px;left:300px;position:absolute;">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">实时交流</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+
+	<form onsubmit="return false;">
+		<input type="text" name="message1" required="required">
+		<br><h4>昵称</h4>
+
+		<input type="text" name="message2"
+			   style="width: 500px;"
+			   class="form-control" placeholder="输入" value="">
+		<input
+			type="button" value="发送"
+			onclick="send(
+			    '【'+this.form.message1.value + '】发言：'+
+			       this.form.message2.value
+			       )"
+
+
+		class="btn btn-default"
+			>
+		<h3>面板：</h3>
+		<textarea id="responseText" style="width: 500px; height: 300px;"></textarea>
+		<input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空内容">
+	</form>
+
+	<%--<form class="navbar-form navbar-left" role="search">
+		<input type="text" name="message" value="Hello, World!">
+		<input type="button" value="发送消息" onclick="send(this.form.message.value)">
+		<h3>输出：</h3>
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Search">
+		</div>
+		<textarea id="responseText2" style="width: 500px; height: 300px;"></textarea>
+		<input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空">
+	</form>--%>
+
+</div>
+
 <!-- 编辑对话框 -->
 <div class="modal fade" id="customerEditDialog" tabindex="-1" role="dialog"
 	 aria-labelledby="myModalLabel">
@@ -482,21 +520,21 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">修改购买信息</h4>
+				<h4 class="modal-title" id="myModalLabel">购买信息</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-horizontal" id="edit_shop_form">
 					<input type="hidden" id="edit_shop_id" name="shop_id"/>
 					<div class="form-group">
-						<label for="edit_shop_name" class="col-sm-2 control-label">客户人</label>
+						<label for="edit_shop_name" class="col-sm-2 control-label">购买人</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="edit_shop_name" placeholder="客户名称" name="shop_name">
+							<input type="text" class="form-control" id="edit_shop_name" placeholder="姓名" name="shop_name">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="edit_shop_source" style="float:left;padding:7px 15px 0 27px;">购买方式</label>
 						<div class="col-sm-10">
-							<select	class="form-control" id="edit_shop_source" placeholder="客户来源" name="shop_source">
+							<select	class="form-control" id="edit_shop_source" placeholder="购买方式" name="shop_source">
 								<option value="">--请选择--</option>
 								<c:forEach items="${sellList}" var="list">
 									<option value="${list.dict_id}"
@@ -528,19 +566,19 @@
 					<div class="form-group">
 						<label for="edit_shop_matter" class="col-sm-2 control-label">购买商品</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="edit_shop_matter" placeholder="联系人" name="dict_item_name">
+							<input type="text" class="form-control" id="edit_shop_matter" placeholder="商品名称" name="dict_item_name">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="edit_shop_price" class="col-sm-2 control-label">价格(元)</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="edit_shop_price" placeholder="联系人" name="shop_price">
+							<input type="text" class="form-control" id="edit_shop_price" placeholder="商品价格" name="shop_price">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="edit_sell_man" class="col-sm-2 control-label">售卖人</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="edit_sell_man" placeholder="固定电话" name="sell_man">
+							<input type="text" class="form-control" id="edit_sell_man" placeholder="姓名" name="sell_man">
 						</div>
 					</div>
 					<div class="form-group">
@@ -552,13 +590,13 @@
 					<div class="form-group">
 						<label for="edit_shop_address" class="col-sm-2 control-label">购买地址</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="edit_shop_address" placeholder="邮政编码" name="shop_address">
+							<input type="text" class="form-control" id="edit_shop_address" placeholder="详细地址" name="shop_address">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="edit_shop_creattime" class="col-sm-2 control-label">购买时间</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="edit_shop_creattime" placeholder="联系地址" name="shop_createtime">
+							<input type="text" class="form-control" id="edit_shop_creattime" placeholder="详细时间" name="shop_createtime">
 						</div>
 					</div>
 				</form>
@@ -632,7 +670,25 @@
                 width:'700px'
             });*/
 
-            $("#sell-table").fadeIn(3000)
+            $("#talk").fadeOut();
+
+            $("#sell-table").fadeIn(2000);
+
+        });
+
+        $("#talk_t").click(function(){
+            $("#page-wrapper").fadeOut();
+
+            /*$("#sell-table").animate({
+                left:'400px',
+                height:'700px',
+                width:'700px'
+            });*/
+
+            $("#sell-table").fadeOut();
+
+
+            $("#talk").fadeIn(2000);
 
         });
 
@@ -733,6 +789,92 @@
             });
         }
     }
+
+
+    var socket;
+    if (!window.WebSocket) {
+        window.WebSocket = window.MozWebSocket;
+    }
+    if (window.WebSocket) {
+//			socket = new WebSocket("ws://localhost:2048/ws");
+        socket = new WebSocket("ws://localhost:2049/ws");
+        socket.onmessage = function(event) {
+            var ta = document.getElementById('responseText');
+//                appendln("receive:" + event.data);
+            ta.value = ta.value + '\n' + event.data
+        };
+        socket.onopen = function(event) {
+            var ta = document.getElementById('responseText');
+            ta.value = "连接开启!";
+        };
+        socket.onclose = function(event) {
+            var ta = document.getElementById('responseText');
+            ta.value = ta.value + "连接被关闭";
+        };
+    } else {
+        alert("你的浏览器不支持！");
+    }
+
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(message);
+
+
+        } else {
+            alert("连接没有开启.");
+        }
+    }
+
+
+   /* var socket;
+
+    if(!window.WebSocket){
+        window.WebSocket = window.MozWebSocket;
+    }
+
+    if(window.WebSocket){
+        socket = new WebSocket("ws://localhost:2049/ws");
+
+        socket.onmessage = function(event){
+            appendln("receive:" + event.data);
+        };
+
+        socket.onopen = function(event){
+            appendln("WebSocket is opened");
+
+        };
+
+        socket.onclose = function(event){
+            appendln("WebSocket is closed");
+        };
+    }else{
+        alert("WebSocket is not support");
+    }
+
+    function send(message){
+        if(!window.WebSocket){return;}
+        if(socket.readyState == WebSocket.OPEN){
+            socket.send(message);
+            appendln("send:" + message);
+        }else{
+            alert("WebSocket is failed");
+        }
+
+    }
+
+    function appendln(text) {
+        var ta = document.getElementById('responseText');
+        ta.value += text + "\r\n";
+    }
+
+    function clear() {
+        var ta = document.getElementById('responseText');
+        ta.value = "";
+    }*/
+
 
 </script>
 
